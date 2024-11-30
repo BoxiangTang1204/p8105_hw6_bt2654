@@ -53,7 +53,7 @@ boot_straps =
 
 
 ### Step 3: Fit a linear model for each bootstrap sample and extract results
-```{r}
+```{r, message=FALSE, warning=FALSE}
 # Fit a model to each bootstrap sample and extract coefficients and R-squared
 bootstrap_results = 
   boot_straps |>
@@ -80,7 +80,7 @@ bootstrap_results =
 
 
 ### Step 4: Summarize Bootstrap Statistics and Confidence Intervals
-```{r}
+```{r, message=FALSE, warning=FALSE}
 # Display summary statistics for the bootstrap results
 summary_stats = 
   bootstrap_results |>
@@ -136,7 +136,7 @@ list(
 
 
 ### Step 5: Visualize the results
-```{r}
+```{r, message=FALSE, warning=FALSE, fig.show="hide"}
 # Visualize the distribution of R-squared
 ggplot(bootstrap_results, 
        aes(x = r_squared)) +
@@ -167,12 +167,18 @@ ggplot(bootstrap_results,
 ```
 
 
+![](p8105_hw6_bt2654_files/figure-gfm/problem1_pic_1.png)
+
+
 #### **Figure 1: Distribution of \( R^2 \)**
 - **Description**: The distribution of \( R^2 \) from 5000 bootstrap samples is unimodal and approximately normal, with most values clustering around the mean \( R^2 = 0.9116 \). This indicates that \( tmin \) explains a substantial proportion of the variance in \( tmax \) in the bootstrap linear regression model.
 
 ---
 
-#### **Figure 3: Distribution of \( \log(\beta_0 \cdot \beta_1) \)**
+![](p8105_hw6_bt2654_files/figure-gfm/problem1_pic_2.png)
+
+
+#### **Figure 2: Distribution of \( \log(\beta_0 \cdot \beta_1) \)**
 - **Description**: The distribution of \( \log(\beta_0 \cdot \beta_1) \) is unimodal and approximately normal, with most values clustering around the mean \( \log(\beta_0 \cdot \beta_1) = 2.013 \).
 
 
@@ -341,7 +347,7 @@ city_models |>
 
 
 ### Step 4: Plot Adjusted Odds Ratios for Each City
-```{r,message=FALSE, warning=FALSE, fig.height=15, fig.width=8}
+```{r,message=FALSE, warning=FALSE, fig.height=15, fig.width=8, fig.show="hide"}
 # Step 4: Plot adjusted odds ratios for each city
 ggplot(city_models, 
        aes(x = reorder(city_state, adjusted_OR),
@@ -367,6 +373,10 @@ ggplot(city_models,
   theme_minimal()  # Apply minimal theme to plot
 
 ```
+
+
+
+![](p8105_hw6_bt2654_files/figure-gfm/problem2_pic_1.png)
 
 
 #### Figure Comments
@@ -472,7 +482,7 @@ included to explore whether the effect of maternal weight at delivery on birthwe
 the mother’s pre-pregnancy weight, as these two factors are biologically interconnected and 
 jointly impact fetal growth.
 
-```{r, message=FALSE, warning=FALSE}
+```{r, message=FALSE, warning=FALSE, fig.show="hide"}
 # Model 1: Custom maternal weight model
 model_maternal_weight = 
   lm(bwt ~ ppwt * delwt, 
@@ -504,6 +514,9 @@ ggplot(data_cleaned,
 # Summarize the custom model (model 1)
 summary(model_maternal_weight)
 ```
+
+
+![](p8105_hw6_bt2654_files/figure-gfm/problem3_pic_1.png)
 
 
 #### 1. Residual Plot Comments：
@@ -592,7 +605,7 @@ data_cleaned =
 
 
 ### Step 4: Compare Residuals for All Models
-```{r, message=FALSE, warning=FALSE}
+```{r, message=FALSE, warning=FALSE, fig.show="hide"}
 # Combine residuals for all models
 residuals_combined =
   data_cleaned |>
@@ -636,6 +649,9 @@ ggplot(residuals_combined,
 ```
 
 
+![](p8105_hw6_bt2654_files/figure-gfm/problem3_pic_2.png)
+
+
 #### Residual Plot Comparison
 
 - **Comments**:
@@ -653,9 +669,9 @@ ggplot(residuals_combined,
 
 
 ### Step 5: Goodness of Fit
-```{r}
+```{r,message=FALSE, warning=FALSE,fig.show="hide"}
 # Combine predictions for all models
-data_cleaned_with_predictions =
+data_cleaned_with_predictions = 
   data_cleaned |>
   gather_predictions(model_maternal_weight,
                      model_length_age, 
@@ -688,6 +704,9 @@ ggplot(data_cleaned_with_predictions,
 
 
 ```
+
+
+![](p8105_hw6_bt2654_files/figure-gfm/problem3_pic_3.png)
 
 
 #### Comments on Goodness of Fit Plot
@@ -729,7 +748,7 @@ ggplot(data_cleaned_with_predictions,
 
 
 ### Step 6: Cross-Validation and RMSE Comparison
-```{r}
+```{r, message=FALSE, warning=FALSE, fig.show="hide"}
 # Cross-validation for model comparison
 set.seed(123)
 cv_results =
@@ -802,6 +821,9 @@ cv_results |>
 4. Model 3: Full Interaction achieves the best performance with the lowest RMSE (288.38), highlighting the importance of interaction terms in the model.
 
 ---
+
+![](p8105_hw6_bt2654_files/figure-gfm/problem3_pic_4.png)
+
 
 #### 2. Comments on RMSE Distribution Plot：
 
