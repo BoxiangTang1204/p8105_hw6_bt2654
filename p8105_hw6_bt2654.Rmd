@@ -195,22 +195,25 @@ library(broom)      # For tidying model outputs
 library(purrr)      # For functional programming, e.g., using map()
 
 # Read the homicide data
-homicide_data <- read_csv("data/homicide-data.csv")
+homicide_data = read_csv("data/homicide-data.csv")
 
 # Step 1: Data cleaning and variable creation
-homicide_cleaned <- homicide_data %>%
+homicide_cleaned =
+  homicide_data |>
   mutate(
     city_state = str_c(city, state, sep = ", "),  # Create a city_state variable
     solved = ifelse(str_detect(disposition, "Closed"), 1, 0)  # Create solved binary variable
-  ) %>%
+  ) |>
   filter(
     # Remove specific cities as per the problem instructions
     !city_state %in% c("Dallas, TX", "Phoenix, AZ", "Kansas City, MO", "Tulsa, AL"),
     # Keep only "White" or "Black" victim race
     victim_race %in% c("White", "Black"),
     # Remove rows where victim age is unknown
-    victim_age != "Unknown"
-  ) %>%
+    victim_age != "Unknown",
+    # Remove rows where victim sex is unknown
+    victim_sex != "Unknown"
+  ) |>
   mutate(
     victim_age = as.numeric(victim_age),  # Convert victim age to numeric
     victim_race = fct_relevel(victim_race, "White")  # Set reference level of victim race to "White"
